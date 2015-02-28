@@ -17,7 +17,6 @@
 
 #include "DMXSerial.h"
 
-uint8_t dmxValue = 0;
 
 void setup() {
   DMXSerial.maxChannel(512);
@@ -28,13 +27,13 @@ void setup() {
 
 // loop through the rainbow colors 
 void loop() {
-  dmxValue++;
   
-  DMXSerial.write(1, 100);
+  int sensorValue1 = analogRead(A0);
+  DMXSerial.write(1, sensorValue1 >> 2);
   
-  int sensorValue = analogRead(A0);
+  int sensorValue2 = analogRead(A1);
+  DMXSerial.write(2, sensorValue2 >> 2);
   
-  DMXSerial.write(2, sensorValue >> 2);
-
+  
   
 } // loop

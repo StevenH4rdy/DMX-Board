@@ -16,9 +16,22 @@
 // - - - - -
 
 #include "DMXSerial.h"
+// #include "encoder.h"
 
+ int val = 4; 
+ int encoder0PinA = 2;
+ int encoder0PinB = 3;
+ uint8_t encoder0Pos = 0;
+ int encoder0PinALast = LOW;
+ int n = LOW;
+ int i = HIGH;
 
 void setup() {
+
+   pinMode (encoder0PinA,INPUT_PULLUP);
+   pinMode (encoder0PinB,INPUT_PULLUP);
+   pinMode (val, INPUT_PULLUP);
+
   DMXSerial.maxChannel(512);
 
   DMXSerial.init(DMXController);
@@ -28,12 +41,28 @@ void setup() {
 // loop through the rainbow colors 
 void loop() {
   
+  n = digitalRead(encoder0PinA);
+   if ((encoder0PinALast == LOW) && (n == HIGH)) {
+     if (digitalRead(encoder0PinB) == LOW) {
+       encoder0Pos--;
+     } else {
+       encoder0Pos++;
+     }
+     
+   } 
+   encoder0PinALast = n;
+  
+   i = digitalRead(val);
+   if (i == LOW) {
+    encoder0Pos = 95;
+   }
+  
   int sensorValue1 = analogRead(A0);
-  DMXSerial.write(1, sensorValue1 >> 2);
+  DMXSerial.write(2, sensorValue1 >> 2);
   
-  int sensorValue2 = analogRead(A1);
-  DMXSerial.write(2, sensorValue2 >> 2);
+  // int sensorValue2 = analogRead(A1);
+  DMXSerial.write(1, encoder0Pos);
   
-  
+ 
   
 } // loop

@@ -126,22 +126,22 @@ void loop() {
   
   int sensorValue1 = analogRead(A0);
   if (sensorValue1 != lastsensorValue) {
-  DMXSerial.write(x, sensorValue1 >> 2);
+  DMXSerial.write(dmxchannel(x), sensorValue1 >> 2);
   }
   lastsensorValue = sensorValue1;
   
   int sensorValue2 = analogRead(A1);
   if (sensorValue2 != lastsensorValue2) {
-  DMXSerial.write(y, sensorValue2 >> 2);
+  DMXSerial.write(dmxchannel(y), sensorValue2 >> 2);
   }
   lastsensorValue2 = sensorValue2;
   
   // int sensorValue2 = analogRead(A1);
-  DMXSerial.write(a, encoder0Pos);
+  DMXSerial.write(dmxchannel(a), encoder0Pos);
   
-  DMXSerial.write(b, encoder1Pos);
+  DMXSerial.write(dmxchannel(b), encoder1Pos);
   
-  DMXSerial.write(c, encoder2Pos);
+  DMXSerial.write(dmxchannel(c), encoder2Pos);
   
   
   
